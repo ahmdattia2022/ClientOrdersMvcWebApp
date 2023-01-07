@@ -4,19 +4,21 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-<form asp-action="Register" asp-controller="Client" method="post" class="form w-100" novalidate="novalidate" id="kt_sign_up_form">
+<form asp-action="Register" asp-controller="Client" method="post" class="form w-100" id="kt_sign_up_form">
     <div class="text-center mb-11">
         <h1 class="text-dark fw-bolder mb-3">Regiser</h1>
     </div>
     <!--Email-->
     <div class="fv-row mb-8">
         <input type="email" asp-for="Email" placeholder="Email" autocomplete="off" class="form-control bg-transparent" />
+        <span class="text-danger" asp-validation-for="Email"></span>
     </div>
     <!--Password-->
     <div class="fv-row mb-8" data-kt-password-meter="true">
         <div class="mb-1">
             <div class="position-relative mb-3">
                 <input asp-for="Password" class="form-control bg-transparent" type="password" placeholder="Password" autocomplete="off" />
+                <span class="text-danger" asp-validation-for="Password"></span>
                 <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
                     <i class="bi bi-eye-slash fs-2"></i>
                     <i class="bi bi-eye fs-2 d-none"></i>
@@ -34,34 +36,28 @@
     <!--Repeat Password-->
     <div class="fv-row mb-8">
         <input asp-for="RepeatPassword" placeholder="Repeat Password" type="password" autocomplete="off" class="form-control bg-transparent" />
+        <span class="text-danger" asp-validation-for="RepeatPassword"></span>
     </div>
     <!--Mobile Phone-->
     <div class="fv-row mb-8">
         <input asp-for="MobilePhone" placeholder="Phone Number" type="tel" autocomplete="off" class="form-control bg-transparent" />
+        <span class="text-danger" asp-validation-for="MobilePhone"></span>
     </div>
     <!--Full Name-->
     <div class="fv-row mb-8">
-        <input asp-for="FullName" placeholder="Full Name" type="te" autocomplete="off" class="form-control bg-transparent" />
+        <input asp-for="FullName" placeholder="Full Name" type="text" autocomplete="off" class="form-control bg-transparent" />
+        <span class="text-danger" asp-validation-for="FullName"></span>
     </div>
     <!--Username-->
     <div class="fv-row mb-8">
-        <input asp-for="Username" placeholder="Username" type="te" autocomplete="off" class="form-control bg-transparent" />
+        <input asp-for="Username" placeholder="Username" type="text" autocomplete="off" class="form-control bg-transparent" />
+        <span class="text-danger" asp-validation-for="Username"></span>
     </div>
 
     <!--begin::Submit button-->
-    <div class="d-grid mb-10">
-        <button type="submit" id="kt_sign_up_submit" class="btn btn-primary">
-            <!--begin::Indicator label-->
-            <span class="indicator-label">Sign up</span>
-            <!--end::Indicator label-->
-            <!--begin::Indicator progress-->
-            <span class="indicator-progress">
-                Please wait...
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-            </span>
-            <!--end::Indicator progress-->
-        </button>
-    </div>
+    <button type="submit" class="btn btn-primary" onclick="CheckAvailability()">
+        Sign Up
+    </button>
     <!--end::Submit button-->
     <!--begin::Sign In-->
     <div class="text-gray-500 text-center fw-semibold fs-6">
@@ -82,3 +78,8 @@
 <script src="~/Content/assets/js/custom/authentication/sign-up/general.js"></script>
 <!--end::Custom Javascript-->
 <!--end::Javascript-->
+
+<script src="~/jquery/jquery.min.js"></script>
+<script src="~/jquery-validate/jquery.validate.min.js"></script>
+<script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/plugins/jquery/jquery.js"></script>

@@ -27,17 +27,18 @@ namespace ClientOrdersMvcWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
             services.AddMvc();
 
             services.AddDbContextPool<ApplicationDbCobtext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("defaultConnecttion")));
 
             services.AddScoped<IClientRep, ClientRep>(); //for loose coupling
+            services.AddScoped<IOrderRep, OrderRep>(); //for loose coupling
 
 
 
 
-            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,7 +65,7 @@ namespace ClientOrdersMvcWebApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Client}/{action=Login}/{id?}");
+                    pattern: "{controller=Client}/{action=Register}/{id?}");
             });
         }
     }

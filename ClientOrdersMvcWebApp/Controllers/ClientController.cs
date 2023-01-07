@@ -12,13 +12,13 @@ namespace ClientOrdersMvcWebApp.Controllers
 {
     public class ClientController : Controller
     {
-        private readonly ApplicationDbCobtext db;
         private readonly IClientRep client;
-
-        public ClientController(IClientRep client, ApplicationDbCobtext db)
+        private readonly ApplicationDbCobtext db;
+        ClientVM SignedInClient = new ClientVM();
+        public ClientController(IClientRep _client, ApplicationDbCobtext db)
         {
             this.db = db;
-            this.client = client;
+            this.client = _client;
         }
         public IActionResult Index()
         {
@@ -37,7 +37,8 @@ namespace ClientOrdersMvcWebApp.Controllers
                 if (ModelState.IsValid)
                 {
                     client.Add(_client);
-                    return RedirectToAction("Index", "Home");
+                    SignedInClient = _client;
+                    return RedirectToAction("SingIn", "Client");
                 }
 
                 return View(_client);
@@ -57,9 +58,39 @@ namespace ClientOrdersMvcWebApp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SignIn(ClientVM _client)
+        public IActionResult SignIn(LoginVM _client)
         {
-            return View();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    client.GetByEmail(_client);
+                    //filter home page based on the client (home page containing all products list
+                    //and add to cart)
+                    return RedirectToAction("Index", "Order", _client.Id);
+                }
+
+                return View(_client);
+            }
+            catch (Exception ex)
+            {
+                EventLog log = new EventLog();
+                log.Source = "Admin Dashboard";
+                log.WriteEntry(ex.Message, EventLogEntryType.Error);
+
+                return View(_client);
+            }
+        }
+
+        //validation for username exist
+        public IActionResult IsUserNameExist(string username)
+        {
+            return Json(!db.Clients.Any(x => x.Username == username), new Newtonsoft.Json.JsonSerializerSettings());
+        }
+        //validaton for email exist
+        public IActionResult IsEmailExist(string email)
+        {
+            return Json(!db.Clients.Any(x => x.Email == email), new Newtonsoft.Json.JsonSerializerSettings());
         }
     }
 }

@@ -9,16 +9,16 @@ namespace ClientOrdersMvcWebApp.ViewModel
     public class OrderVM
     {
         public int Id { get; set; }
-        [Required]
         public int ClientId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please Enter Order Serial No")]
         public string OrderSerialNo { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please Enter Order Date")]
         public DateTime OrderDate { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please Enter Order Details")]
         public string OrderDetails { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please Enter Order Status")]
         public string OrderStatus { get; set; }
+        public string Email { get; set; } //Stores client email
         public bool Active { get; set; }
     }
 }

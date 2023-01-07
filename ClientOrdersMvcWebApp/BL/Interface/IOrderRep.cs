@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace ClientOrdersMvcWebApp.BL.Interface
 {
-    public interface IClientRep
+    public interface IOrderRep
     {
-        IQueryable<ClientVM> Get();
-        ClientVM GetByEmail(LoginVM loginVM);
-        ClientVM GetById(int ID);
-        void Add(ClientVM client);
-        void Update(ClientVM client);
+        IQueryable<OrderVM> Get(int clientId);
+        OrderVM GetByID(int ID);
+        void Add(OrderVM dept);
+        void Update(OrderVM dept);
         void Delete(int ID);
     }
 }
